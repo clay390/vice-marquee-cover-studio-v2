@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vice Marquee Cover Studio — movie-poster cover maker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2314081f'/%3E%3Ctext x='16' y='22' font-size='18' text-anchor='middle' fill='%23ffd23e' font-family='sans-serif' font-weight='bold'%3EV%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">V</span>
+    <div>
+      <h1>Vice Marquee Cover Studio</h1>
+      <p>Your photos become GTA-style movie-poster key art — role callouts, chrome titles, seal, billing block, PNG export.</p>
+    </div>
+  </div>
+  <ol class="steps" id="steps">
+    <li data-step="1" class="active"><b>1</b> Add photos</li>
+    <li data-step="2"><b>2</b> Caption</li>
+    <li data-step="3"><b>3</b> Export PNG</li>
+  </ol>
+</header>
+
+<main class="app">
+  <aside class="panel" aria-label="Editor controls">
+    <section class="step-block" data-step-block="1">
+      <h2><span class="step-num">1</span> Add photos</h2>
+      <p class="hint">Click a slot to pick its panel, then drag the photo on the canvas to move it, or scroll to zoom. Double-click a slot to change its photo.</p>
+      <div class="slots" id="slots"></div>
+      <div class="row">
+        <button id="fillSamples" type="button">Use sample photos</button>
+        <button id="fillScenes" type="button">Use painted scenes</button>
+      </div>
+      <div class="row">
+        <label class="upload">Upload photos
+          <input id="upload" type="file" accept="image/*" multiple>
+        </label>
+        <button id="clearPhotos" type="button">Clear</button>
+      </div>
+      <h3>Selected panel</h3>
+      <div class="field">
+        <label for="roleTag">Role callout tag</label>
+        <input id="roleTag" type="text" maxlength="16" value="THE INSIDER">
+      </div>
+      <div class="field">
+        <label for="zoom">Zoom <output id="zoomOut">100%</output></label>
+        <input id="zoom" type="range" min="100" max="260" value="100">
+      </div>
+      <div class="field">
+        <label for="panX">Move left / right <output id="panXOut">0</output></label>
+        <input id="panX" type="range" min="-60" max="60" value="0">
+      </div>
+      <div class="field">
+        <label for="panY">Move up / down <output id="panYOut">0</output></label>
+        <input id="panY" type="range" min="-60" max="60" value="0">
+      </div>
+      <div class="row">
+        <button id="flipPanel" type="button">Flip</button>
+        <button id="swapPanel" type="button">Swap →</button>
+        <button id="facePanel" type="button">Centre</button>
+      </div>
+      <h3>Photo filter</h3>
+      <div class="chips" id="filterChips"></div>
+      <h3>Layout</h3>
+      <div class="chips chips-wide" id="layoutChips"></div>
+      <h3>Grade</h3>
+      <div class="chips chips-wide" id="gradeChips"></div>
+    </section>
+
+    <section class="step-block" data-step-block="2">
+      <h2><span class="step-num">2</span> Caption</h2>
+      <div class="field">
+        <label for="title">Chrome title</label>
+        <input id="title" type="text" maxlength="24" value="VICE MARQUEE">
+      </div>
+      <div class="field">
+        <label for="script">Script subtitle (neon)</label>
+        <input id="script" type="text" maxlength="32" value="one last summer">
+      </div>
+      <div class="field">
+        <label for="tagline">Tagline ribbon</label>
+        <input id="tagline" type="text" maxlength="48" value="FIVE FRIENDS · ONE COAST · NO WAY BACK">
+      </div>
+      <div class="field">
+        <label for="quote">Press quote (masthead)</label>
+        <input id="quote" type="text" maxlength="48" value="PURE GOLDEN-HOUR MAYHEM">
+      </div>
+      <div class="field">
+        <label for="source">Quote source</label>
+        <input id="source" type="text" maxlength="28" value="THE HARBOR GAZETTE">
+      </div>
+      <div class="field">
+        <label for="volume">Volume tab</label>
+        <select id="volume">
+          <option>VOL. 1</option>
+          <option>VOL. 2</option>
+          <option>VOL. 3</option>
+          <option>SEASON ONE</option>
+          <option>PART II</option>
+        </select>
+      </div>
+      <h3>Caption presets</h3>
+      <div class="chips chips-wide" id="presetChips"></div>
+      <div class="row">
+        <button id="surprise" type="button" title="Shuffle layout, grade, caption and filters (S)">🎲 Surprise me</button>
+      </div>
+      <h3>Look</h3>
+      <div class="field">
+        <label for="lookPaint">Paint <output id="lookPaintOut">50</output></label>
+        <input id="lookPaint" type="range" min="0" max="100" value="50">
+      </div>
+      <div class="field">
+        <label for="lookGrade">Grade <output id="lookGradeOut">80</output></label>
+        <input id="lookGrade" type="range" min="0" max="100" value="80">
+      </div>
+      <div class="field">
+        <label for="lookHalftone">Halftone <output id="lookHalftoneOut">35</output></label>
+        <input id="lookHalftone" type="range" min="0" max="100" value="35">
+      </div>
+      <div class="field">
+        <label for="lookGrain">Grain <output id="lookGrainOut">50</output></label>
+        <input id="lookGrain" type="range" min="0" max="100" value="50">
+      </div>
+      <div class="field">
+        <label for="lookGlow">Glow <output id="lookGlowOut">60</output></label>
+        <input id="lookGlow" type="range" min="0" max="100" value="60">
+      </div>
+      <label class="check"><input id="frameToggle" type="checkbox" checked> White poster frame</label>
+    </section>
+
+    <section class="step-block" data-step-block="3">
+      <h2><span class="step-num">3</span> Export PNG</h2>
+      <h3>Size</h3>
+      <div class="chips" id="sizeChips"></div>
+      <div class="row">
+        <button id="export" type="button" class="primary" title="Export the selected size (E)">Export PNG</button>
+        <button id="exportAll" type="button" title="Export all three sizes (A)">Export all three</button>
+      </div>
+      <div class="row">
+        <button id="compare" type="button" title="Hold to see the raw photos (hold B)">Hold: before / after</button>
+        <button id="undo" type="button" title="Undo (U)">Undo</button>
+        <button id="redo" type="button" title="Redo (R)">Redo</button>
+      </div>
+      <p id="status" role="status"></p>
+      <p class="hint">Shortcuts: <kbd>1</kbd>–<kbd>5</kbd> layout · <kbd>G</kbd> grade · <kbd>F</kbd> flip panel · <kbd>S</kbd> surprise · <kbd>E</kbd> export · <kbd>A</kbd> export all · <kbd>U</kbd>/<kbd>R</kbd> undo/redo · hold <kbd>B</kbd> compare. Photos never leave your machine.</p>
+    </section>
+  </aside>
+
+  <section class="stage">
+    <div class="stage-label" id="stageLabel">Live preview — graded cover</div>
+    <canvas id="cover" width="1080" height="1080" aria-label="The cover preview"></canvas>
+    <p class="stage-hint">Click a panel to select it · drag to move its photo · scroll to zoom · double-click a panel to change its photo</p>
+  </section>
+</main>
+
+<input id="slotPicker" type="file" accept="image/*" hidden>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
